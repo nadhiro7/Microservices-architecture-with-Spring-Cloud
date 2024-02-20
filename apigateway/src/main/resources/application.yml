@@ -1,0 +1,33 @@
+
+server:
+  port: 9004
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:9101
+
+  cloud:
+    gateway:
+      routes:
+         - id: produit
+           uri: lb://MICROSERVICE-PRODUITS
+           predicates:
+             - Path= /Produits/**
+  security:
+    user:
+      name: utilisateur
+      password: mdp
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9102/eureka/
+      spring:
+        cloud:
+          config:
+            uri: http://localhost:9101
+
+
+
+
